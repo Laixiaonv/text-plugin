@@ -1,10 +1,9 @@
+
 import React from 'react';
-// import styles from './Button.less';
 
 const Button = (props) => {
-  const { value } = props;
-  return (
-    <Button>123</Button>
+  return  (
+    <div>{'按钮'}</div>
   )
 }
 
