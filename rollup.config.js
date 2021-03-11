@@ -2,23 +2,24 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
-import { terser } from "rollup-plugin-terser";
-
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-export default {
+const env = process.env.NODE_ENV;
+
+const config = {
   input: 'src/index.js',
   output: [
     {
-      file: `${pkg.main}`,
+      file: pkg.main,
       format: 'cjs',
     },
     {
-      file: `${pkg.module}`,
+      file: pkg.module,
       format: 'es',
-    },
+    }
   ],
   plugins: [
     postcss({
@@ -42,5 +43,12 @@ export default {
     }),
     terser(),
   ],
-  external: ['react']
+  external: ['react'],
+};
+if (env === 'production') {
+  config.plugins.push(
+    terser(),
+  );
 }
+
+export default config;
